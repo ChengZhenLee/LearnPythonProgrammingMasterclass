@@ -2,22 +2,28 @@ empty_list = []
 even  = [2, 4, 6, 8]
 odd = [1, 3, 5, 7, 9]
 
-numbers = even + odd
+numbers = [even, odd]
 print(numbers)
 
-sorted_numbers = sorted(numbers)    # creates a new list
-print(sorted_numbers)
-print(numbers)
+for number_list in numbers:
+    print(number_list)
 
-digits = list("432985617")          # creates a new list
-print(digits)
+# numbers = even + odd
+# print(numbers)
 
-# more_numbers = list(numbers)      # creates a new list
-# more_numbers = numbers[:]         # creates a new list
-more_numbers = numbers.copy()       # creates a new list
-print(more_numbers)
-print(numbers is more_numbers)      # checks if they are the same list
-print(numbers == more_numbers)      # checks if the contents are the same
+# sorted_numbers = sorted(numbers)    creates a new list
+# print(sorted_numbers)
+# print(numbers)
+
+# digits = list("432985617")          creates a new list
+# print(digits)
+
+# more_numbers = list(numbers)      creates a new list
+# more_numbers = numbers[:]         creates a new list
+# more_numbers = numbers.copy()     creates a new list
+# print(more_numbers)
+# print(numbers is more_numbers)    checks if they are the same list
+# print(numbers == more_numbers)    checks if the contents are the same
 
 # print(min(even))
 # print(max(even))
