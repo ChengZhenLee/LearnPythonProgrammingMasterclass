@@ -1,28 +1,34 @@
 def multiply(x, y):
     """
-    Multiplies two numbers together
+    Multiplies 2 numbers.
+
+    Although this function is intednded to multiply 2 numbers, 
+    you can also use it to multiply a sequence. If you pass a
+    string, for example, as the first argument, you'll get the
+    string repeated `y` times as the returned value.
 
     Arguments:
-        x -- The first number to be multiplied with
+        x -- The number to multiply `y` with
     
-        y -- The second number to be multiplied with
+        y -- The number to multiply `x` with
     
     return:
-        The result of the multiplication
+        The product of `x` and `y`
     """
     result = x * y
     return result
 
 def is_palindrome(string):
     """
-    Check if a string with upper and lower
-    case characters is a palindrome
+    Check if a string is a palindrome.
+
+    A palindrome is a string that reads the same forwards as backwards.
 
     Arguments:
-        string -- The string with upper and lower case characters that is checked
+        string -- The string to check.
 
     return:
-        True if it is a palindrome, false if not
+        True if `string` is a palindrome, False otherwise
     """
     # backwards = string[::-1]
     # return backwards == string
@@ -31,14 +37,16 @@ def is_palindrome(string):
 
 def palindrome_sentence(sentence):
     """
-    Check if a sentence with punctuation 
+    Check if a sentence is a palindrome
+
+    The function ignores whitespace, capitalisation and punctuation
+    in the sentence 
 
     Arguments:
-        sentence -- A string with punctuation, 
-        lower and upper case characters that is checked
+        sentence -- The sentence to check.
 
     Returns:
-        True if it is a palindrome, false if not
+        True if `sentence` is a palindrome, False otherwise
     """
     scrubbed_sentence= ""
     for char in sentence:
@@ -48,6 +56,26 @@ def palindrome_sentence(sentence):
     # return scrubbed_sentence[::-1] == scrubbed_sentence
     return is_palindrome(scrubbed_sentence)
 
+
+def fibonacci(n):
+    """
+    Return the `n` th Fibonacci number, for positive `n`.
+    """
+    if 0 <= n <= 1:
+        return n
+    
+    n_minus1, n_minus2 = 1, 0
+
+    for f in range(n - 1):
+        result = n_minus2 + n_minus1
+        n_minus2 = n_minus1
+        n_minus1 = result
+        
+    return result
+
+
+for i in range(36):
+    print(i, fibonacci(i))
 
 answer = multiply(18 ,3)
 print(answer)
