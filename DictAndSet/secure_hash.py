@@ -22,6 +22,6 @@ print()
 print(f"SHA256: {new_hash.hexdigest()}")
 
 if new_hash.hexdigest() == original_hash.hexdigest():
-    print("Thecode has not been changed")
+    print("The code has not been changed")
 else:
     print("The code has been modified")
