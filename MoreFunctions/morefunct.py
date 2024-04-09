@@ -18,6 +18,7 @@ def draw_axes(page):
     # Sets the axis values
     # Note that in Tkinter, the y-axis is negative from the top and 
     # increases downwards, as opposed to normal axes in math
+    # scrollregion units are in PIXELS
     page.configure(scrollregion=(-x_origin, -y_origin, x_origin, y_origin))
     page.create_line(-x_origin, 0, x_origin, 0, fill="black")
     page.create_line(0, y_origin, 0, -y_origin, fill="black")
