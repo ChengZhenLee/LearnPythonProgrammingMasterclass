@@ -30,7 +30,10 @@ def load_images(card_images):
             card_images.append((10, image,))
 
 
-def deal_card(frame):
+# A leading underscore means that this is a protected method of a module
+# When importing a module, protected methods are not supposed to be 
+# called outside of the module
+def _deal_card(frame):
     # pop the next card off the top of the deck
     next_card = deck.pop(0)
     # Add the popped card to the back of the deck
@@ -101,6 +104,14 @@ def deal_player():
     #     result_text.set("Dealer wins!")
 
 
+def initial_deal():
+    # Deal initially two cards to the player and one card to the dealer
+    deal_player()
+    dealer_hand.append(deal_card(dealer_card_frame))
+    dealer_score_label.set(score_hand(dealer_hand))
+    deal_player()
+
+    
 def new_game():
     global dealer_card_frame
     global player_card_frame
@@ -122,16 +133,17 @@ def new_game():
     dealer_hand = []
     player_hand = []
 
-    # Deal initially two cards to the player and one card to the dealer
-    deal_player()
-    dealer_hand.append(deal_card(dealer_card_frame))
-    dealer_score_label.set(score_hand(dealer_hand))
-    deal_player()
+    initial_deal()
 
 
 def shuffle():
-    global deck
     random.shuffle(deck)
+
+
+def play():
+    initial_deal()
+
+    mainWindow.mainloop()
 
 
 # Set up the screen and frames for the dealer and player
@@ -190,7 +202,9 @@ shuffle()
 dealer_hand = []
 player_hand = []
 
-# Create a new game when it first runs to reduce repeating code
-new_game()
-
-mainWindow.mainloop()
+# __name__ of blackjack.py will not be '__main__' when it is imported
+# as a module.
+# Thus, this checks if blackjack.py is being run itself or if it is imported
+# The latter condition will cause blackjack to not run automatically
+if __name__ == "__main__":
+    play()
