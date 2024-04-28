@@ -5,12 +5,11 @@ import datetime
 class Account:
     """ Simple account class with balance """
 
-    # Static method does not require the use of `self` in it 
-    # and is shared among all object instances
-    # the leading `_` means the method or attribute is for
-    # internal use only
-    # double `__` means it is a protected method or attribute
-    # and cannot be modified outside the class as python mangles it
+    # Static method is associated to the class and 
+    # not individual objects
+    # defined without 'self' and called
+    # using the class name itself
+    # usually used as utility functions
     @staticmethod
     def _current_time():
         """ returns aware utc time """
