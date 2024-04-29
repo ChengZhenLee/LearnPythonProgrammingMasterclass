@@ -1,33 +1,38 @@
-from enemy import Enemy, Troll, Vampyre
+from enemy import Enemy, Troll, Vampyre, VampyreKing
 
-ugly_troll = Troll("Pug")
-print("Ugly troll - {}".format(ugly_troll))
+dracula = VampyreKing("Dracula")
+print("Dracula")
+dracula.take_damage(12)
+print(dracula)
 
-another_troll = Troll("Ug")
-print("Another troll - {}".format(another_troll))
-another_troll.take_damage(18)
-print(another_troll)
+# ugly_troll = Troll("Pug")
+# print("Ugly troll - {}".format(ugly_troll))
 
-brother = Troll("Urg")
-print(brother)
+# another_troll = Troll("Ug")
+# print("Another troll - {}".format(another_troll))
+# another_troll.take_damage(18)
+# print(another_troll)
 
-ugly_troll.grunt()
-another_troll.grunt()
-brother.grunt()
+# brother = Troll("Urg")
+# print(brother)
 
-vamp = Vampyre("Vlad")
-print(vamp)
-vamp.take_damage(5)
-print(vamp)
+# ugly_troll.grunt()
+# another_troll.grunt()
+# brother.grunt()
 
-print("-" * 40)
-another_troll.take_damage(30)
-print(another_troll)
+# vamp = Vampyre("Vlad")
+# print(vamp)
+# vamp.take_damage(5)
+# print(vamp)
 
-# while vamp.alive:
-#     vamp.take_damage(1)
-#       print(vamp)
+# print("-" * 40)
+# another_troll.take_damage(30)
+# print(another_troll)
 
-vamp.lives = 0
-vamp.hit_points = 1
-print(vamp)
+# # while vamp.alive:
+# #     vamp.take_damage(1)
+# #       print(vamp)
+
+# vamp.lives = 0
+# vamp.hit_points = 1
+# print(vamp)
