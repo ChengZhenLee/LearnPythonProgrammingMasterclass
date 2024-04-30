@@ -47,10 +47,16 @@ class Body(Tag):
     
 class HtmlDoc(object):
 
+    # Composition
+    # The object parts are declared here directly
     # def __init__(self, title=None):
         # self._doc_type = DocType()
         # self._head = Head(title)
         # self._body = Body()
+
+    # Aggregation
+    # The object parts are declared independently
+    # and then passed here
     def __init__(self, doc_type, head, body):
         self._doc_type = doc_type
         self._head = head
