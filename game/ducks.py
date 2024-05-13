@@ -49,6 +49,28 @@ class Penguin(object):
 #     duck.swim()
 #     duck.quack()
 
+class Flock(object):
+    def __init__(self):
+        self.flock = []
+
+    def add_duck(self, duck: Duck) -> None:
+        self.flock.append(duck)
+    
+    def migrate(self):
+        for duck in self.flock:
+            try:
+                duck.fly()
+            # exception is stored in a variable e
+            except AttributeError as e:
+                print("One duck down")
+                problem = e
+                # raise
+                
+        # Only raises the error once the for loop is done
+        if problem:
+            # 'raise' claus raises an error in the program
+            raise problem
+    
 
 if __name__ == '__main__':
     donald = Duck()
