@@ -1,13 +1,15 @@
 import sqlite3
 import datetime
 import pytz
+import pickle
 
 db = sqlite3.connect("accounts.sqlite", detect_types=sqlite3.PARSE_DECLTYPES)
 db.execute("CREATE TABLE IF NOT EXISTS accounts "
            "(name TEXT PRIMARY KEY NOT NULL, balance INTEGER NOT NULL)")
 db.execute("CREATE TABLE IF NOT EXISTS history "
            "(time TIMESTAMP NOT NULL, account TEXT NOT NULL, "
-           "amount INTEGER NOT NULL, PRIMARY KEY (time, account))")
+           "amount INTEGER NOT NULL, zone INTEGER NOT NULL, "
+           "PRIMARY KEY (time, account))")
 # PRIMARY KEY (time, account) is a composite key
 db.execute("CREATE VIEW IF NOT EXISTS localhistory AS "
             "SELECT strftime('%Y-%m-%d %H:%M:%f', "
@@ -24,7 +26,12 @@ class Account(object):
         # return local_time.astimezone()
 
         # returns the aware utc time
-        return pytz.utc.localize(datetime.datetime.utcnow())
+        # return pytz.utc.localize(datetime.datetime.utcnow())
+
+        utc_time = pytz.utc.localize(datetime.datetime.utcnow())
+        local_time = utc_time.astimezone()
+        zone = local_time.tzinfo
+        return utc_time, zone
 
     def __init__(self, name: str, opening_balance: int = 0):
         cursor = db.execute("SELECT name, balance FROM accounts WHERE (name = ?)", (name, ))
@@ -43,9 +50,11 @@ class Account(object):
     
     def _save_update(self, amount):
         new_balance = self._balance + amount
-        deposit_time = Account._current_time()
+        deposit_time, zone = Account._current_time() # <-- unpack the returned tuple
+        pickled_zone = pickle.dumps(zone)
+
         db.execute("UPDATE accounts SET balance = ? WHERE (name = ?)", (new_balance, self.name))
-        db.execute("INSERT INTO history VALUES(?, ?, ?)", (deposit_time, self.name, amount))
+        db.execute("INSERT INTO history VALUES(?, ?, ?, ?)", (deposit_time, self.name, amount, pickled_zone))
         db.commit()
         self._balance = new_balance
 
