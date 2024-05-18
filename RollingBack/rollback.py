@@ -24,7 +24,8 @@ class Account(object):
         # return local_time.astimezone()
 
         # returns the aware utc time
-        return pytz.utc.localize(datetime.datetime.utcnow())
+        # return pytz.utc.localize(datetime.datetime.utcnow())
+        return 1
 
     def __init__(self, name: str, opening_balance: int = 0):
         cursor = db.execute("SELECT name, balance FROM accounts WHERE (name = ?)", (name, ))
@@ -44,10 +45,19 @@ class Account(object):
     def _save_update(self, amount):
         new_balance = self._balance + amount
         deposit_time = Account._current_time()
-        db.execute("UPDATE accounts SET balance = ? WHERE (name = ?)", (new_balance, self.name))
-        db.execute("INSERT INTO history VALUES(?, ?, ?)", (deposit_time, self.name, amount))
-        db.commit()
-        self._balance = new_balance
+        try:
+            db.execute("UPDATE accounts SET balance = ? WHERE (name = ?)", (new_balance, self.name))
+            db.execute("INSERT INTO history VALUES(?, ?, ?)", (deposit_time, self.name, amount))
+        except sqlite3.Error:
+            # rolls back the database
+            # specifically rolls back the UPDATE execution
+            # such that it doesn't stay pending and will not be
+            # committed when a later cursor.connection.commit() or 
+            # db.commit() is called
+            db.rollback()
+        else:
+            db.commit()
+            self._balance = new_balance
 
     def deposit(self, amount: int) -> float:
         if amount > 0.0:
